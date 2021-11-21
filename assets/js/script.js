@@ -1,4 +1,3 @@
-
 var formEl = $('#city-form'); // form that contains city input and button
 var cityInputEl = $('#city-input'); // name of city that is entered
 var savedCitiesEl = $('#saved-cities'); // element with saved buttons
@@ -8,31 +7,29 @@ var cityWthrEl = $('#city-weather-text'); // block with weather conditions
 const lowUVI = 4; // maximum low risk from UV Index
 const modUVI = 8; // maximum moderate risk from UV Index
 var apiKey = '&appid=f3e4e1fc64808ebfa5c1347325b4ff4b'; //OpenWeather API key
-var savedCitiesArray; 
+var savedCitiesArray;
 
 // displayModal displays  a string to the user by a Bootstrap modal
 function displayModal(displayText) {
-	console.log("displayModal");
+
 	$('#weather-modal').find('.modal-title').text('Note:');
 	$('#weather-modal').find('.modal-body').text(displayText);
 	$('#weather-modal').modal('show');
 }
-
 
 // reads and creates buttons from local storage
 var init = function() {
 	// read local storage and create button for each city
 	// add event handler to each one
 	// displayModal("Good morning, Linda!");
-	savedCitiesArray = JSON.parse(localStorage.getItem("weather-cities"));
+	savedCitiesArray = JSON.parse(localStorage.getItem('weather-cities'));
 
 	// // if there are saved cities already, create buttons, otherwise initialize storage
 	if (savedCitiesArray !== null) {
-		for (var i=0; i< savedCitiesArray.length; i++) {
+		for (var i = 0; i < savedCitiesArray.length; i++) {
 			createCityButton(savedCitiesArray[i]);
 		}
-	}
-	else {
+	} else {
 		savedCitiesArray = [];
 	}
 };
@@ -40,7 +37,7 @@ var init = function() {
 // read and display the temperature, wind speed, humidity and UV Index.  Color code the UV Index green if acceptable, orange/yellow if moderate and red if dangerous.
 var displayTempWindHumUV = function(data) {
 	// remove old info in top weather box
-	console.log("in dtwhu");
+
 	$('#city-weather-text').children().each(function() {
 		this.html = '';
 	});
@@ -52,7 +49,6 @@ var displayTempWindHumUV = function(data) {
 	// wrap color background according to UV Index
 	$('#uv').html('<b>UV Index: </b>');
 	$('#uv').removeClass('badge-success badge-warning badge-danger');
-
 
 	// if UV is less than lowUVI range, set badge color to low (=success)
 	if (data.current.uvi < lowUVI) {
@@ -80,8 +76,6 @@ var fetchTopConditions = function(data) {
 		.then(function(response) {
 			if (response.ok) {
 				response.json().then(function(data) {
-					console.log(JSON.stringify(data));
-
 					// display weather for current day
 					displayTempWindHumUV(data);
 
@@ -101,20 +95,29 @@ var fetchTopConditions = function(data) {
 var display5DayForecast = function(data) {
 	// fill in each day's forecast.  Today is at location 0, start after that, but forecast blocks start at 0
 	for (var i = 1; i < 6; i++) {
-    
 		var dateToDisplay = moment.unix(data.daily[i].dt);
 
-		console.log('5Day: ', dateToDisplay.format('MM/DD/YY'));
-    var whichDayBlock = "#day" + i;
-    var curCondition = $(whichDayBlock + " > .forecast-data"); // 
-    curCondition.text(dateToDisplay.format('MM/DD/YY'));
-    
-
-		var whichIcon = data.daily[i].weather.icon;
+		var whichDayBlock = '#day' + i;
+		$(whichDayBlock).removeClass('hide')
+		// Fill in the date
+		var curEl = $(whichDayBlock + ' > .forecast-date'); 
+		curEl.text(dateToDisplay.format('MM/DD/YY'));
+		// Fill in weather icon
+		var whichIcon = data.daily[i].weather[0].icon;
+		
 		var iconURL = 'http://openweathermap.org/img/wn/' + whichIcon + '@2x.png';
-		// $('#todayIcon').attr('src', iconURL);
-		// $('#todayIcon').attr('height', '48');
-		// $('#todayIcon').attr('width', '48');
+		$(whichDayBlock +'> img').attr('src', iconURL);
+	
+		// Fill in temperature
+		$(whichDayBlock + '> .temp').text('Temp: ' + data.daily[i].temp.day  + '\xB0F');
+		//Fill in Wind
+		$(whichDayBlock + '> .wind').text('Wind: ' + data.daily[i].wind_speed  + ' mph');
+
+		// Fill in Humidity
+		$(whichDayBlock + '> .humidity').text('Humidity: ' + data.daily[i].humidity  + '%');
+
+		
+
 	}
 };
 
@@ -123,9 +126,9 @@ var displayTopWeatherHeader = function(data) {
 	var dateToday = moment().format(' (MM/D/YYYY)');
 	var headerStr = data.city.name;
 	headerStr += dateToday;
-	console.log(headerStr);
+
 	$('#city-date').text(headerStr);
-	$('#city-date').css("font-weight", "Bold");	
+	$('#city-date').css('font-weight', 'Bold');
 	var whichIcon = data.list[0].weather[0].icon;
 	var iconURL = 'http://openweathermap.org/img/wn/' + whichIcon + '@2x.png';
 	$('#todayIcon').attr('src', iconURL);
@@ -150,13 +153,9 @@ var fetchCityForecast = function(cityName) {
 		.then(function(response) {
 			if (response.ok) {
 				response.json().then(function(data) {
-					console.log(JSON.stringify(data));
+					// console.log(JSON.stringify(data));
 
-					// remove old info top weather box
 
-					// while (breedDisplayEl.firstChild) {
-					//   breedDisplayEl.removeChild(breedDisplayEl.firstChild);
-					// }
 					// display weather for current day and 5 day forecast
 					displayWeatherAndForecast(data);
 				});
@@ -170,50 +169,45 @@ var fetchCityForecast = function(cityName) {
 };
 
 var saveCity = function(cityName) {
-	if (cityName != "") {
-		// add cityname to array 
+	if (cityName != '') {
+		// add cityname to array
 		savedCitiesArray.push(cityName);
 
-		localStorage.setItem("weather-cities", JSON.stringify(savedCitiesArray));
+		localStorage.setItem('weather-cities', JSON.stringify(savedCitiesArray));
 	}
-	console.log ("SaveCity: ", savedCitiesArray);
 };
+
+// grabs city name from the button and then fills out the weather.
 function fillCity(event) {
 	var targetCity = event.target.textContent;
-	console.log("tgtCty: ", targetCity);
-
 	fetchCityForecast(targetCity);
-
 }
 var createCityButton = function(cityInput) {
-		// create button element with cityName
-	
-		// var button = $("<button>");
-		// button.text = cityInput;
-		// button.addClass("custom-btn2 btn mb-2");
-		// savedCitiesEl.append(button);
-		// console.log(JSON.stringify(savedCitiesEl));
-	//  button.on("click", fillCity);
+	// create button element with cityName
 
-		var button = document.createElement('button');
-		button.type = 'button';
-		button.innerHTML = cityInput;
-		button.classList.add('custom-btn2');
-		button.classList.add('btn');
-		button.classList.add('mb-2');
-		savedCitiesEl.append(button);
-		
-		// add eventListener
-		button.addEventListener("click", fillCity);
+	// var button = $("<button>");
+	// button.text = cityInput;
+	// button.addClass("custom-btn2 btn mb-2");
+	// savedCitiesEl.append(button);
+	// console.log(JSON.stringify(savedCitiesEl));
+	// button.on("click", fillCity);
 
+	var button = document.createElement('button');
+	button.type = 'button';
+	button.innerHTML = cityInput;
+	button.classList.add('custom-btn2');
+	button.classList.add('btn');
+	button.classList.add('mb-2');
+	savedCitiesEl.append(button);
 
+	// add eventListener
+	button.addEventListener('click', fillCity);
 };
 
 var handleFormSubmit = function(event) {
 	event.preventDefault();
 
 	var cityName = cityInputEl.val();
-	console.log('clicked Get ForecastBtn', cityName);
 	if (!cityName) {
 		displayModal('Please enter a city!');
 		return;
@@ -230,6 +224,3 @@ var handleFormSubmit = function(event) {
 // Let's get things rolling!
 init();
 formEl.on('submit', handleFormSubmit);
-
-
-

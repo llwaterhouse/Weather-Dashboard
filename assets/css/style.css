@@ -15,7 +15,7 @@ body {
   background-color:#e7d6c1 ;
 }
 header {
- background-color: #295266;
+ background-color: #24645D;
  color: #f7c48f;
 }
 hr {
@@ -79,7 +79,6 @@ hr {
   color: var(--light);
 }
 
-.custom-card-header {
-  background-color: var(--teal);
-  color: var(--lightteal);
+.hide {
+  display:none;
 }
