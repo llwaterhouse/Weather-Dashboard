@@ -64,7 +64,7 @@ Display of current weather and 5 day forecast
 
 ### Deployed Application
 
-[The deployed GitPage Application](https://llwaterhouse.github.io/Survival-Quiz/)
+[The deployed GitPage Application](https://llwaterhouse.github.io/Weather-Dashboard/)
 
 
 ## Acknowledgements
@@ -72,7 +72,7 @@ Display of current weather and 5 day forecast
 Rutgers Coding Bootcamp
 
 ## License
----
+MIT
 
 © 2021 Linda Waterhouse Consulting. Confidential and Proprietary. All Rights Reserved.
 
