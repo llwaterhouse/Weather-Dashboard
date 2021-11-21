@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="Description" content="Enter your description here" />
+    <link rel="shortcut icon" type="image/png" href="./assets/images/favicon-32x32.png" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./assets/css/style.css">
+
+    <title>Weather Dashboard</title>
+</head>
+
+<body>
+    <header class="container container-fluid text-center">
+        <!-- Every grid layout we create starts with an HTML element receiving a class of row -->
+        <!-- align-items-end change the alignment of flex items to end -->
+        <!-- <div class="row align-items-end"> -->
+        <!-- Uses a combination of col-* values to make full-size on small devices and half-size on medium or larger devices -->
+        <div class="col-12">
+            <h1>Weather Dashboard</h1>
+        </div>
+        <!-- </div> -->
+    </header>
+
+    <main class="container">
+        <div class="row align-items-start">
+            <section class="column col-md-3">
+                <div class="col-12">
+                    <h3>Search for a City:</h3>
+                    <form id="city-form">
+                        <div class="form-group">
+                            <input type="text" id="city-input" placeholder="Enter a city" class="form-control" />
+                        </div>
+                        <button class="btn custom-btn">Get Forecast</button>
+                    </form>
+                    <hr />
+                    <div id="saved-cities">
+                        <!-- add local storage buttons here -->
+                        <!-- <button class="custom-btn2 btn mb-2"> Button 1</button>
+                        <button class="custom-btn2 btn mb-2"> Button 2</button> -->
+                    </div>
+                </div>
+            </section>
+
+            <section class="column col-md-9">
+                <div class="row">
+                    <div id="city-weather" class="col-12 ">
+                        <div class="row">
+                            <p id="city-date" class="mt-1">City (Date):</p>
+                            <img id="todayIcon" src="" alt="">
+                        </div>
+                        <div id="city-weather-text">
+                            <p class="top-text" id="temp"><span style="font-weight:bold">Temp:</span></p>
+                            <p class="top-text" id="wind"><span style="font-weight:bold">Wind:</span></p>
+                            <p class="top-text" id="humidity"><span style="font-weight:bold">Humidity:</span></p>
+                            <p class="top-text" id="uv"><span style="font-weight:bold">UV Index:</span></p>
+                        </div>
+                    </div>
+                </div>
+                <p id="forecast-text">5-Day Forecast: </p>
+                <div class="row justify-content-between">
+
+                    <div id="day1" class="card hide mb-2 custom-card">
+                        <p class="forecast-date">12/19/21</p>
+                        <img src="./assets/images/Single-Weather-Icons-drawing.jpeg" width="32px" height="32px">
+                        <p class="bot-text temp">Temp: </p>
+                        <p class="bot-text wind">Wind: </p>
+                        <p class="bot-text humidity">Humidity: </p>
+
+                    </div>
+                    <div id="day2" class="card custom-card mb-2 hide">
+                        <p class="forecast-date"></p>
+                        <img id=src="" alt="">
+                        <p class="bot-text temp">Temp: </p>
+                        <p class="bot-text wind">Wind: </p>
+                        <p class="bot-text humidity">Humidity: </p>
+
+                    </div>
+                    <div id="day3" class="card  custom-card mb-2 hide">
+                        <p class="forecast-date custom-card-header">3/31/21</p>
+                        <img id=src="" alt="">
+                        <p class="bot-text temp">Temp: </p>
+                        <p class="bot-text wind">Wind: </p>
+                        <p class="bot-text humidity">Humidity: </p>
+
+                    </div>
+                    <div id="day4" class="card custom-card mb-2 hide">
+                        <p class="forecast-date"></p>
+                        <img id=src="" alt="">
+                        <p class="bot-text">Temp: </p>
+                        <p class="bot-text">Wind: </p>
+                        <p class="bot-text">Humidity: </p>
+
+                    </div>
+                    <div id="day5" class="card custom-card mb-2 hide">
+                        <p class="forecast-date"></p>
+                        <img id=src="" alt="">
+                        <p class="bot-text">Temp: </p>
+                        <p class="bot-text">Wind: </p>
+                        <p class="bot-text">Humidity: </p>
+
+                    </div>
+
+                </div>
+            </section>
+        </div>
+    </main>
+<!-- Modal -->
+<div class="modal fade" id="weather-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Note</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          ...
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<script src="./assets/js/script.js"></script>
+
+</html>
